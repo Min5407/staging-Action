@@ -1,0 +1,27 @@
+{
+  "name": "githubaction",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Min5407/staging-Action.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Min5407/staging-Action/issues"
+  },
+  "homepage": "https://github.com/Min5407/staging-Action#readme",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.40.0",
+    "typescript": "^5.0.4"
+  }
+}
