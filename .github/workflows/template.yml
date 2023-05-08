@@ -6,7 +6,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: ["main"]
+    branches: ["*"]
   pull_request:
     branches: ["main"]
 
@@ -35,7 +35,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world! runner ${{fromJson(runner)}}
+        run: echo Hello, world! runner ${{fromJson(runner.os)}}
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
