@@ -24,13 +24,8 @@ jobs:
       - name: Output Inputs
         run: echo "${{ toJSON(github.event.inputs) }}"
 
-      - name: Output Inputs2
-        run: echo "${{ toJSON(secrets) }}"
-      - name: Output Inputs2
-        run: echo "${{ toJSON(secrets.GITHUB_TOKEN) }}"
-
       - name: check PR number
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         id: verify_pr_number
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -60,7 +55,7 @@ jobs:
 
       ## write comment after deployment
       - name: Update status
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
