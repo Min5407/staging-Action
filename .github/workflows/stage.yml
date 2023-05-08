@@ -56,15 +56,18 @@ jobs:
           ref: ${{ steps.verify_pr_number.outputs.result }}
 
       ## deploy action ~~
+
       ## write comment after deployment
       - name: Update status
-
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            > PR #${{ github.event.inputs.PR_NUMBER }} has been deployed successfully
+
             github.rest.issues.createComment({
-              issue_number: context.issue.number,
+              issue_number: ${{ github.event.inputs.PR_NUMBER }},
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
+              body: "#### finsih deploy to stage"
             })
