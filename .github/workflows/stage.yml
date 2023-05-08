@@ -40,12 +40,14 @@ jobs:
               repo: context.repo.repo,
             pull_number: ${{ github.event.inputs.PR_number }}
             });
+            echo ("#context:" + context);
+            echo ("#respones:" + response);
 
             // Check if the pull request is open
             if (response.data.number !== ${{ github.event.inputs.PR_number }}) {
               throw new Error('Pull request is not open or number is not valid!');
             } else {
-              console.log("##PR:" + response.data.head.ref);
+              echo ("##PR:" + response.data.head.ref);
               return response.data.head.ref;
             }
 
