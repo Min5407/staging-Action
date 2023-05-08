@@ -15,24 +15,44 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    defaults:
+      run:
+        shell: bash
+
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Output Inputs
+        run: echo "${{ toJSON(github) }}"
 
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
+      - name: check PR number
+        uses: actions/github-script@v6
+        id: verify_pr_number
         with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: |
+            const response = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            pull_number: ${{ github.event.inputs.PR_number }}
+            });
 
-      # install dependencies
-      - name: install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install
+            // Check if the pull request is open
+            if (response.data.number !== ${{ github.event.inputs.PR_number }}) {
+              throw new Error('Pull request is not open or number is not valid!');
+            } else {
+              console.log("##PR:" + response.data.head.ref);
+              return response.data.head.ref;
+            }
+
+      # downlaod the repo of the PR
+      - name: checkout PR
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.verify_pr_number.outputs.result }}
+
+      ## deploy action ~~
