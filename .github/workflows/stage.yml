@@ -56,20 +56,3 @@ jobs:
           ref: ${{ steps.verify_pr_number.outputs.result }}
 
       ## deploy action ~~
-
-      ## write comment after deployment
-      - name: Update status
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.rest.pulls.createReview({
-              pull_number: ${{ github.event.inputs.PR_NUMBER }},
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "#### finsih deploy to stage"
-            })
-
-      - name: Setup tmate session
-        if: ${{ failure() }}
-        uses: mxschmitt/action-tmate@v3
