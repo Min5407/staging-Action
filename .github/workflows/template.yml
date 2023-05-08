@@ -48,14 +48,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-     - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Cache dependencies
+          id: cache
+          uses: actions/cache@v3
+          with:
+            path: "**/node_modules"
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-
 
       # install dependencies
       - name: install dependencies
@@ -71,16 +71,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-     - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: "**/node_modules"
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Cache dependencies
+          id: cache
+          uses: actions/cache@v3
+          with:
+            path: "**/node_modules"
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-
 
-      # install dependencies
-      - name: install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install
+        # install dependencies
+        - name: install dependencies
+          if: steps.cache.outputs.cache-hit != 'true'
+          run: npm install
