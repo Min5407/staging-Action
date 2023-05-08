@@ -63,8 +63,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            > PR #${{ github.event.inputs.PR_NUMBER }} has been deployed successfully
-
             github.rest.issues.createComment({
               issue_number: ${{ github.event.inputs.PR_NUMBER }},
               owner: context.repo.owner,
