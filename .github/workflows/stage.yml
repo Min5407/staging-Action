@@ -69,3 +69,7 @@ jobs:
               repo: context.repo.repo,
               body: "#### finsih deploy to stage"
             })
+
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v
