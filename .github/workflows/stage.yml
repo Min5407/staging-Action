@@ -24,6 +24,11 @@ jobs:
       - name: Output Inputs
         run: echo "${{ toJSON(github.event.inputs) }}"
 
+      - name: Output Inputs2
+        run: echo "${{ toJSON(secrets) }}"
+      - name: Output Inputs2
+        run: echo "${{ toJSON(secrets.GITHUB_TOKEN) }}"
+
       - name: check PR number
         uses: actions/github-script@v5
         id: verify_pr_number
@@ -51,15 +56,17 @@ jobs:
         with:
           ref: ${{ steps.verify_pr_number.outputs.result }}
 
+      ## deploy action ~~
+
+      ## write comment after deployment
       - name: Update status
         uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `#### Staging server created
+            const output = `#### finsih deploy to stage
             > PR #${{ github.event.inputs.PR_number }} has been deployed successfully
 
-            URL: http://${{ steps.apply_output.outputs.stdout }}`;
             github.rest.issues.createComment({
               issue_number: ${{ github.event.inputs.PR_number }},
               owner: context.repo.owner,
